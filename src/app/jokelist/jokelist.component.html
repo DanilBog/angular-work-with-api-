@@ -1,22 +1,22 @@
 <div align="center" *ngIf="jokeapi">
     <div>
         <div class="example-button-row" *ngFor=" let menu of menus">
-            <a routerLink="/jokelist/jokeapi/{{menu}}"><button mat-stroked-button color="warn">{{menu}}</button></a>
+            <a routerLink="/jokelist/jokeapi/{{ menu }}"><button mat-stroked-button color="warn">{{ menu }}</button></a>
         </div>
         <button (click)="goBack()" mat-stroked-button color="primary">go back</button>
     </div>
-    <h3>Раздел "{{id}}"</h3>
+    <h3>Раздел "{{ id }}"</h3>
     <div *ngFor="let joke of jokes">
         <mat-card class="example-card">
             <mat-card-header>
-                <mat-card-title >{{joke.id}}</mat-card-title>
+                <mat-card-title >{{ joke.id }}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <p>
-                {{joke.setup}}
+                {{ joke.setup }}
                 </p>
                 <p>
-                    {{joke.punchline}}
+                    {{ joke.punchline }}
                 </p>
             </mat-card-content>
         </mat-card>
@@ -26,19 +26,19 @@
 <div align="center" *ngIf="chucknorris">
     <div>
         <div class="example-button-row" *ngFor=" let menu of chuckCategory.value">
-            <a  routerLink="/jokelist/chucknorris/{{menu}}"><button  mat-stroked-button color="warn">{{menu}}</button></a>
+            <a  routerLink="/jokelist/chucknorris/{{ menu }}"><button  mat-stroked-button color="warn">{{ menu }}</button></a>
         </div>
         <button (click)="goBack()" mat-stroked-button color="primary">go back</button>
 </div>
-    <h3>Раздел "{{id}}"</h3>
+    <h3>Раздел "{{ id }}"</h3>
     <div *ngFor="let joke of chuckJokes.value">
         <mat-card class="example-card">
             <mat-card-header>
-                <mat-card-title >{{joke.id}}</mat-card-title>
+                <mat-card-title >{{ joke.id }}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <p>
-                {{joke.joke}}
+                {{ joke.joke }}
                 </p>
             </mat-card-content>
         </mat-card>

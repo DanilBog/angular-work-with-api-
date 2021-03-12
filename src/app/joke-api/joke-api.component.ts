@@ -12,20 +12,21 @@ export class JokeApiComponent implements OnInit {
   menus = [];
   joke: Joke;
   randomJoke = '';
-  Loading = true;
-
+  isLoading = true;
 
   constructor(private jokeService: JokeService) { }
 
   ngOnInit(): void {
-    this.get_random_joke();
+    this.getRandomJoke();
     this.menus = this.jokeService.getApimenu();
   }
 
-  get_random_joke(): void {
+  getRandomJoke(): void {
     this.jokeService.getJoke()
-        .subscribe(joke => { this.joke = joke; console.log('Случайная шутка:', this.joke); this.Loading=false; });
+        .subscribe(joke => {
+          this.joke = joke;
+          console.log('Случайная шутка:', this.joke);
+          this.isLoading = false; });
   }
-
 
 }

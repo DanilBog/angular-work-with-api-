@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Joke } from './joke';
-import { norrisJoke } from './norrisjoke';
-import { norrisJokes } from './norrisjoke';
-import { norrisCategory } from './norrisjoke';
+import { NorrisJoke } from './norrisjoke';
+import { NorrisJokes } from './norrisjoke';
+import { NorrisCategory } from './norrisjoke';
 @Injectable({
   providedIn: 'root'
 })
-
 
 export class JokeService {
   menus = ['general', 'knock-knock', 'programming'];
@@ -16,7 +15,7 @@ export class JokeService {
   urlBytype = 'https://official-joke-api.appspot.com/jokes/';
   urlChuck = 'http://api.icndb.com/jokes/random';             // random Chuck Norris joke
   urlChuckCategory = 'http://api.icndb.com/categories';       // Chuck Norris category
-  urlChuckBycategory = 'http://api.icndb.com/jokes/random/10?limitTo=[';                                    // Chuck Norris 
+  urlChuckBycategory = 'http://api.icndb.com/jokes/random/10?limitTo=[';                                    // Chuck Norris
   constructor(private http: HttpClient) { }
 
   getJoke(): Observable<Joke> {
@@ -28,19 +27,21 @@ export class JokeService {
     return this.http.get<Joke[]>(urlBytype);
   }
 
-  getChuckjoke(): Observable<norrisJoke> {
-      return this.http.get<norrisJoke>(this.urlChuck);
+  getChuckjoke(): Observable<NorrisJoke> {
+      return this.http.get<NorrisJoke>(this.urlChuck);
   }
-  getChuckCategory(): Observable<norrisCategory> {
-    return this.http.get<norrisCategory>(this.urlChuckCategory);
+
+  getChuckCategory(): Observable<NorrisCategory> {
+    return this.http.get<NorrisCategory>(this.urlChuckCategory);
   }
-  getNorrisJokebyType(jokeType: string): Observable<norrisJokes> {
-    const urlChuckBycategory = this.urlChuckBycategory + jokeType + ']'
-    return this.http.get<norrisJokes>(urlChuckBycategory);
+
+  getNorrisJokebyType(jokeType: string): Observable<NorrisJokes> {
+    const urlChuckBycategory = this.urlChuckBycategory + jokeType + ']';
+    return this.http.get<NorrisJokes>(urlChuckBycategory);
   }
+
   getApimenu(): string[] {
     return this.menus;
   }
-
 
 }

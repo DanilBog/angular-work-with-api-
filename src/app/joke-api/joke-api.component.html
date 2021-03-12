@@ -1,8 +1,8 @@
-<mat-spinner *ngIf="Loading"></mat-spinner>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
 
-<div *ngIf="!Loading" align="center">
+<div *ngIf="!isLoading" align="center">
     <div class="example-button-row" *ngFor=" let menu of menus">
-        <a routerLink="/jokelist/jokeapi/{{menu}}"><button mat-stroked-button color="warn">{{menu}}</button></a>
+        <a routerLink="/jokelist/jokeapi/{{ menu }}"><button mat-stroked-button color="warn">{{ menu }}</button></a>
     </div>
 <h2>Official Joke API</h2>
     <mat-card class="example-card">
@@ -11,13 +11,13 @@
         </mat-card-header>
         <mat-card-content>
             <p>
-            {{joke.setup}}
+            {{ joke.setup }}
             </p>
             <p>
-            {{joke.punchline}}
+            {{ joke.punchline }}
             </p>
         </mat-card-content>
-        <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="get_random_joke()">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="getRandomJoke()">
             <mat-icon>delete</mat-icon>
         </button>
     </mat-card>

@@ -1,6 +1,6 @@
 export interface Value {
-  id:number;
-  joke:string;
+  id: number;
+  joke: string;
   categories: [];
 }
 
@@ -14,19 +14,17 @@ export interface norrisJoke {
     }>;
   }*/
 
-  export interface norrisJokes {
-    type: string;
-    value: Value[];
-  }
+export interface NorrisJokes {
+  type: string;
+  value: Value[];
+}
 
-  export interface norrisJoke {
-    type: string;
-    value: Value;
-  }
+export interface NorrisJoke {
+  type: string;
+  value: Value;
+}
 
-
-  export interface norrisCategory {
-    type: string;
-    value: [];
-  }
-  
+export interface NorrisCategory {
+  type: string;
+  value: [];
+}
