@@ -6,7 +6,7 @@ import { JokeService } from '../joke.service';
 import { NorrisJokes } from '../norrisjoke';
 import { NorrisCategory } from '../norrisjoke';
 import { EMPTY, of, Subscription } from 'rxjs';
-import { filter, finalize, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, finalize, map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -28,26 +28,15 @@ export class JokelistComponent implements OnInit, OnDestroy {
     private jokeService: JokeService,
     private location: Location,
     private router: Router)
-    {/*
-      this.subscribtions = this.router.events.subscribe((event: Event) => {
-          if (event instanceof NavigationEnd) {
-             this.getJokes();
-          }
-      });*/
-      /*
-      this.subscribtions = this.router.events.pipe(
-        filter( (event: Event) => event instanceof NavigationEnd)
-      ).subscribe(() => this.getJokes()); */
-
-      this.subscribtions = this.router.events.pipe(
+    {   this.subscribtions = this.router.events.pipe(
         filter( (event: Event) => event instanceof NavigationEnd),
         switchMap(() => this.getJokes() )
-      ).subscribe();
-
+      ).subscribe({
+        error: (err) => console.log('Error from getJokes:', err)
+      });
     }
 
 ngOnInit(): void {
-  this.getJokes();
   this.menus = this.jokeService.getApimenu();
   this.getNorrisCategory();
 }
@@ -61,19 +50,14 @@ getJokes(): Observable <void> {
   const source = this.route.snapshot.paramMap.get('source');
   if (source === 'jokeapi'){
     return this.jokeService.getJokebyType(this.id).pipe(
-      finalize(() => this.jokeapi = true ),
-      map((jokes: Joke[]) => {
-        this.jokes = jokes;
-        console.log(jokes);
-      })
+            finalize(() => {this.jokeapi = true; console.log('Finalyze done'); } ),
+            catchError(error => of(`I caught: ${error}`)),
+            map((jokes: Joke[]) => {
+              this.jokes = jokes;
+              console.log(jokes);
+          })
     );
-  }/*
-    jokes => {
-    this.jokes = jokes;
-    console.log(jokes);
-    this.jokeapi = true;
-    this.chucknorris = false;
-  });*/
+  }
   if (source === 'chucknorris') {
     return this.jokeService.getNorrisJokebyType(this.id).pipe(
       finalize(() => this.chucknorris = true),
@@ -83,12 +67,6 @@ getJokes(): Observable <void> {
       })
     );
     }
-      /*.subscribe(jokes => {
-        this.chuckJokes = jokes;
-        console.log('Шутки от Chuck Norris', jokes);
-        this.jokeapi = false;
-        this.chucknorris = true;
-      });*/
   return of();
 }
 

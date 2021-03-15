@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JokeService } from '../joke.service';
 import { Joke } from '../joke';
+import { finalize } from 'rxjs/operators';
 
 
 @Component({
@@ -13,6 +14,7 @@ export class JokeApiComponent implements OnInit {
   joke: Joke;
   randomJoke = '';
   isLoading = true;
+  errorProxy = false;
 
   constructor(private jokeService: JokeService) { }
 
@@ -22,11 +24,13 @@ export class JokeApiComponent implements OnInit {
   }
 
   getRandomJoke(): void {
-    this.jokeService.getJoke()
-        .subscribe(joke => {
+    this.jokeService.getJoke().pipe(
+      finalize(() => this.isLoading = false)
+    )
+        .subscribe((joke) => {
           this.joke = joke;
-          console.log('Случайная шутка:', this.joke);
-          this.isLoading = false; });
+          console.log('Случайная шутка:', this.joke); },
+          (error) => {console.log('Ошибка получения случайной шутки:', error); if (error.status === 403) { this.errorProxy = true; } } );
   }
 
 }

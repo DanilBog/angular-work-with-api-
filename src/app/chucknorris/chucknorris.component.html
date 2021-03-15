@@ -1,9 +1,14 @@
 <br>
+<div *ngIf="errorProxy">
+    <p>Возможно ошибка прокси, пройдите по ссылки и нажмите кнопку "Request temporary acces to the demo server", затем обновите страницу<a href="https://cors-anywhere.herokuapp.com/corsdemo">Ссылка</a></p>
+</div>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div *ngIf="!isLoading" align="center">
-    <div class="example-button-row" *ngFor=" let menu of chuckCategory.value">
-        <a  routerLink="/jokelist/chucknorris/{{ menu }}"><button  mat-stroked-button color="warn">{{ menu }}</button></a>
-      </div>
+<div *ngIf="!isLoading && !errorProxy" align="center">
+    <div *ngIf="chuckCategory">
+        <div class="example-button-row" *ngFor=" let menu of chuckCategory.value">
+            <a  routerLink="/jokelist/chucknorris/{{ menu }}"><button  mat-stroked-button color="warn">{{ menu }}</button></a>
+        </div>
+    </div>
     <h2>The Internet Chuck Norris Database</h2>
     <mat-card class="example-card">
         <mat-card-header>
@@ -11,10 +16,10 @@
         </mat-card-header>
         <mat-card-content>
             <p>
-                {{ joke.value.id }}
+                {{ joke?.value.id }}
             </p>
             <p>
-                {{ joke.value.joke }}
+                {{ joke?.value.joke }}
             </p>
         </mat-card-content>
         <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="getRandomjoke()">
