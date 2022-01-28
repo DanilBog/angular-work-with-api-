@@ -1,3 +1,8 @@
+Пример работы с сетевыми запросами.
+
+Запрошивает у API шутки о Чакк Норрисе и выводит их на экран.
+
+
 # Jokes
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
